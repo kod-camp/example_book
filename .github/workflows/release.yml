@@ -37,5 +37,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./ebooks/example_book.pdf
-          asset_namae: example_book.pdf
+          asset_name: example_book.pdf
           asset_content_type: application/pdf
