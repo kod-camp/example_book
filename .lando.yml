@@ -1,0 +1,19 @@
+name: professional-local-dev
+proxy:
+  softcover:
+    - professional-local-dev.lndo.site:4000
+services:
+  softcover:
+    type: compose
+    services:
+      user: root
+      image: softcover/softcover
+      command: softcover server
+      volumes:
+        - .:/book
+      environment:
+        PATH: "/var/www:/home/circleci/.local/bin:/home/circleci/bin:/usr/local/bundle/bin:/usr/local/bundle/gems/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/root"
+tooling:
+  softcover:
+    user: root
+    service: softcover

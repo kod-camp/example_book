@@ -1,0 +1,41 @@
+on:
+  push:
+    # Sequence of refs/tags patterns
+    tags:
+      - 'v*'  # Push events to matching v*, i.e. v1.0, v20.15.10
+name: Create release
+jobs:
+  build:
+    name: Create release
+    runs-on: ubuntu-latest
+    container: softcover/softcover:latest
+    steps:
+      - 
+        name: Checkout code
+        uses: actions/checkout@v2
+      - 
+        name: Build project
+        run: |
+          softcover build:pdf
+      - 
+        name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - 
+        name: Upload release asset
+        id: upload-release-asset
+        uses: actiona/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ebooks/example_book.pdf
+          asset_namae: example_book.pdf
+          asset_content_type: application/pdf
