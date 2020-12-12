@@ -1,7 +1,7 @@
-name: professional-local-dev
+name: example-book
 proxy:
   softcover:
-    - professional-local-dev.lndo.site:4000
+    - example-book.lndo.site:4000
 services:
   softcover:
     type: compose
